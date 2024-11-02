@@ -42,25 +42,29 @@ function createPageFromTemplate() {
   return createdPage.id;
 }
 
-// 作成したページに表を追加
-function addTableToPage(pageId, ticketData) {
-  let tableRows = '';
-  ticketData.forEach(ticket => {
-    tableRows += `<tr>
+// テーブル構造を生成する関数
+function generateTableHTML(ticketData) {
+  let rows = ticketData.map(ticket => {
+    return `<tr>
       <td>${ticket.key}</td>
       <td>${ticket.assignee}</td>
       <td>${ticket.point}</td>
     </tr>`;
-  });
+  }).join('');
 
-  const tableContent = `<table>
+  return `<table>
     <tr>
       <th>Key</th>
       <th>Assignee</th>
       <th>Point</th>
     </tr>
-    ${tableRows}
+    ${rows}
   </table>`;
+}
+
+// ページにテーブルを追加する関数
+function addTableToPage(pageId, ticketData) {
+  const tableContent = generateTableHTML(ticketData);
 
   const payload = {
     "version": { "number": 2 }, // ページバージョンは1増加させる
