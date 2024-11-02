@@ -44,20 +44,35 @@ function createPageFromTemplate() {
 
 // テーブル構造を生成する関数
 function generateTableHTML(ticketData) {
-  let rows = ticketData.map(ticket => {
+  // テーブルのヘッダー行（8 列）
+  const headers = `<tr>
+    <th>Select</th>
+    <th>Key</th>
+    <th>Assignee</th>
+    <th>Point</th>
+    <th>Column 5</th>
+    <th>Column 6</th>
+    <th>Column 7</th>
+    <th>Column 8</th>
+  </tr>`;
+
+  // 各チケットの行を生成（1列目にチェックボックス、2列目から ticketData を開始）
+  const rows = ticketData.map(ticket => {
     return `<tr>
+      <td><input type="checkbox"></td>
       <td>${ticket.key}</td>
       <td>${ticket.assignee}</td>
       <td>${ticket.point}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>`;
   }).join('');
 
+  // テーブルの組み立て
   return `<table>
-    <tr>
-      <th>Key</th>
-      <th>Assignee</th>
-      <th>Point</th>
-    </tr>
+    ${headers}
     ${rows}
   </table>`;
 }
