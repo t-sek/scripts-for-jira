@@ -103,6 +103,19 @@ function addTableToPage(pageId, ticketData) {
   Logger.log(`Table added to page ID: ${pageId}`);
 }
 
+// ページバージョンを取得する関数
+function getPageVersion(pageId) {
+  const url = `${CONFLUENCE_API_BASE_URL}content/${pageId}?expand=version`;
+  const options = {
+    method: 'get',
+    headers: getAuthHeaders()
+  };
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response.getContentText());
+  return data.version.number;
+}
+
+
 // メイン関数
 function updateConfluencePageWithTickets() {
   const ticket = [
